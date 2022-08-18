@@ -6,6 +6,7 @@ class CalculatorController{
      this._operation = [];
      this.buttons = buttons;
      this.addEventButtons();
+     this.setLastNumberToDisplay();
    }
 
    //Getters and Setters
@@ -49,7 +50,7 @@ class CalculatorController{
          case '9':
             this.addOperation(parseInt(btn));
          break;
-         case 'AC':
+         case 'CA':
             this.clearAll();
          break;
          case 'CE':
@@ -67,6 +68,12 @@ class CalculatorController{
          case '*':
             this.addOperation(btn);
          break;
+         case '=':
+            this.calc();
+         break;
+         case '.':
+            this.addDot();
+         break;
          default:
             this.setError();
       }
@@ -74,10 +81,12 @@ class CalculatorController{
    
    clearEntry(){
       this._operation.pop();
+      this.setLastNumberToDisplay();
    }
 
    clearAll(){
       this._operation = [];
+      this.setLastNumberToDisplay();
    }
 
    getLastOperation(){
@@ -101,9 +110,17 @@ class CalculatorController{
    }
 
    calc(){
-      let last = this._operation.pop();
+      let last = '';
+      if(this._operation.length > 3){
+         last = this._operation.pop();
+      }
       let result = eval(this._operation.join(''));
-      this._operation = [result, last];
+      this._operation = [result];
+
+      if(last){
+         this._operation.push(last);
+      }
+
       this.setLastNumberToDisplay();
    }
 
@@ -118,7 +135,7 @@ class CalculatorController{
             
          }else if(isNaN(value)){
             //Outra coisa
-
+            console.log('Outra coisa');
          }else{
             //First element
             this.pushOperation(value);
@@ -131,7 +148,7 @@ class CalculatorController{
             this.pushOperation(value);
          }else{
             const newValue = this.getLastOperation().toString() + value.toString();
-            this.setLastOperation(parseInt(newValue));
+            this.setLastOperation(newValue);
 
             //Atualizar Display
             this.setLastNumberToDisplay();
@@ -148,12 +165,29 @@ class CalculatorController{
             break;
          }
       }
+
+      if(!lastNumber){
+         lastNumber = 0;
+      }
+
       this.currentOperation = lastNumber;
    }
 
 
 
+   addDot(){
+      let lastOperation = this.getLastOperation();
 
+      if(typeof lastOperation === 'string' && lastOperation.split('').indexOf('.') > -1) return;
+
+      if(this.isOperator(lastOperation) || !lastOperation){
+         this.pushOperation('0.');
+      }else{
+         this.setLastOperation(lastOperation.toString() + '.');
+      }
+
+      this.setLastNumberToDisplay();
+   }
 
 
 
