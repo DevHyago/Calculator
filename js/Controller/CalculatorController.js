@@ -1,7 +1,6 @@
 class CalculatorController{
 
-   constructor(previusOperation, currentOperation, buttons){
-     this.previusOperationEl = previusOperation;
+   constructor(currentOperation, buttons){
      this.currentOperationEl = currentOperation;
      this._operation = [];
      this.buttons = buttons;
@@ -10,14 +9,6 @@ class CalculatorController{
    }
 
    //Getters and Setters
-   get previusOperation(){
-      return this.previusOperationEl;
-   }
-
-   set previusOperation(value){
-      this.previusOperationEl.innerHTML = value;
-   }
-
    get currentOperation(){
       return this.currentOperationEl;
    }

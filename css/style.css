@@ -26,22 +26,12 @@ body{
    border: 1px solid rgb(255, 255, 255, 0.2);
 }
 
-#previus-operation,
-#current-operation{
-   padding: .2em;
-   overflow-wrap: break-word;
-}
-
-#previus-operation{
-   color: rgb(255, 255, 255, 0.5);
-   overflow-wrap: break-word;
-   min-height: 1.6em;
-}
-
 #current-operation{
    min-height: 1.6em;
    font-size: 3em;
    font-weight: 700;
+   padding: .4em;
+   overflow-wrap: break-word;
 }
 
 #buttons{
